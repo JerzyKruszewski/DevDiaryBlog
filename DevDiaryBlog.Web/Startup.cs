@@ -1,4 +1,6 @@
 using DevDiaryBlog.Web.Data;
+using DevDiaryBlog.Web.Services;
+using DevDiaryBlog.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,7 +31,9 @@ namespace DevDiaryBlog.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddSingleton(Configuration)
+            services
+                .AddScoped<IUserService, UserService>()
+                .AddSingleton(Configuration)
                 .AddDbContext<DevDiaryDatabaseContext>(options =>
                     options.UseSqlServer("Server=localhost\\SQLEXPRESS02;Database=DevDiaryBlogDatabase;Trusted_Connection=True;")
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Scoped);
