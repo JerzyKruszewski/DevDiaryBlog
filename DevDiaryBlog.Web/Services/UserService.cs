@@ -86,11 +86,19 @@ namespace DevDiaryBlog.Web.Services
 
         private static string MD5Hash(string password)
         {
-            byte[] data = Encoding.ASCII.GetBytes(password);
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            byte[] md5data = md5.ComputeHash(data);
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] inputBytes = Encoding.ASCII.GetBytes(password);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
 
-            return Encoding.ASCII.GetString(md5data);
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
         }
     }
 }
