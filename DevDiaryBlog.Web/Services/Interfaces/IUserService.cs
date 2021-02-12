@@ -14,7 +14,7 @@ namespace DevDiaryBlog.Web.Services.Interfaces
 
         Task<User> GetUser(string login);
 
-        Task<bool> ValidateUser(string login, string password);
+        Task<User> ValidateUser(string login, string password);
 
         Task<User> ChangePassword(User user, string newPassword);
 

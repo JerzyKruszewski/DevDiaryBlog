@@ -35,7 +35,7 @@ namespace DevDiaryBlog.Web
                 .AddScoped<IUserService, UserService>()
                 .AddSingleton(Configuration)
                 .AddDbContext<DevDiaryDatabaseContext>(options =>
-                    options.UseSqlServer("Server=localhost\\SQLEXPRESS02;Database=DevDiaryBlogDatabase;Trusted_Connection=True;")
+                    options.UseSqlServer(Configuration["ConnectionString"])//"Server=localhost\\SQLEXPRESS02;Database=DevDiaryBlogDatabase;Trusted_Connection=True;")
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Scoped);
         }
 

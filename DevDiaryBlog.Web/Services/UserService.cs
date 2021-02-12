@@ -24,6 +24,8 @@ namespace DevDiaryBlog.Web.Services
         {
             user.HashedPassword = MD5Hash(newPassword);
 
+            _context.Users.Update(user);
+
             await _context.SaveChangesAsync();
 
             return user;
@@ -32,6 +34,8 @@ namespace DevDiaryBlog.Web.Services
         public async Task<User> EditPermission(User user, PermissionType permission)
         {
             user.Permissions = permission;
+
+            _context.Users.Update(user);
 
             await _context.SaveChangesAsync();
 
@@ -48,16 +52,16 @@ namespace DevDiaryBlog.Web.Services
             return await _context.Users.SingleOrDefaultAsync(u => u.Login == login);
         }
 
-        public async Task<bool> ValidateUser(string login, string password)
+        public async Task<User> ValidateUser(string login, string password)
         {
             User user = await GetUser(login);
 
             if (user == null)
             {
-                return false;
+                return null;
             }
 
-            return MD5Hash(password) == user.HashedPassword;
+            return (MD5Hash(password) == user.HashedPassword) ? user : null;
         }
 
         public async Task<User> RegisterUser(string login, string password, string username)

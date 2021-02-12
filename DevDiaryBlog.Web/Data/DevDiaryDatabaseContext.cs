@@ -4,15 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevDiaryBlog.Web.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DevDiaryBlog.Web.Data
 {
     public class DevDiaryDatabaseContext : DbContext
     {
-        public DevDiaryDatabaseContext(DbContextOptions<DevDiaryDatabaseContext> options)
+        private readonly IConfiguration _configuration;
+
+        public DevDiaryDatabaseContext(DbContextOptions<DevDiaryDatabaseContext> options, IConfiguration configuration)
             : base(options)
         {
-
+            _configuration = configuration;
         }
 
         public DbSet<User> Users { get; set; }
@@ -22,7 +25,7 @@ namespace DevDiaryBlog.Web.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS02;Database=DevDiaryBlogDatabase;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(_configuration["ConnectionString"]);
             }
         }
     }

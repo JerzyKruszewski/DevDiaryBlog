@@ -15,7 +15,7 @@ namespace DevDiaryBlog.Web.Model
 
         public DateTime PublishDate { get; set; }
 
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
 
         public User Author { init; get; }
     }
