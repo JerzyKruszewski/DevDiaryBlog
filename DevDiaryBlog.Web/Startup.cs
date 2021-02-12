@@ -33,6 +33,7 @@ namespace DevDiaryBlog.Web
 
             services
                 .AddScoped<IUserService, UserService>()
+                .AddScoped<IPostService, PostService>()
                 .AddSingleton(Configuration)
                 .AddDbContext<DevDiaryDatabaseContext>(options =>
                     options.UseSqlServer(Configuration["ConnectionString"])
